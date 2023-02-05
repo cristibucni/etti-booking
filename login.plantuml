@@ -1,0 +1,22 @@
+@startuml
+autonumber "<b>00"
+actor User as u 
+participant UI as ui
+participant Express as e 
+participant Node as n 
+database DB as db
+
+
+u -> ui: Trimite datele de autentificare
+ui -> e: HTTP /login
+group Server
+e -> db: Verifica daca utilizatorul exista
+db -> e: raspuns
+e -> n: Verifica daca datele sunt valide
+n -> e: raspuns
+
+e -> db: Atribuire jeton
+end 
+e -> ui: Redirectare /dashboard
+
+@enduml
