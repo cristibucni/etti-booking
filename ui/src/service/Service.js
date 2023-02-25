@@ -23,6 +23,17 @@ class Service {
     return axios.get("http://localhost:5000/api/roles");
   };
 
+
+  // Aduce toti utilizatorii posibili
+  getUsers = () => {
+    return axios.get("http://localhost:5000/api/users");
+  };
+
+  // Actualizeaza proprietatile unui user
+  patchUsers = (id, payload) => {
+    return axios.patch(`http://localhost:5000/api/users/${id}`, payload)
+  };
+
   // Cerere HTTP pentru creearea unui utilizator
   registerUser = (payload) => {
     return axios.post("http://localhost:5000/api/users/register", payload);
@@ -52,6 +63,7 @@ class Service {
 
   // Cerere HTTP pentru creearea unei rezervări
   createBooking = (payload) => {
+    console.log(payload)
     return axios.post("http://localhost:5000/api/bookings", payload);
   };
 

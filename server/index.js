@@ -21,18 +21,20 @@ const db = require('./config/keys').mongoURI
 
 /** Connect to MongoDB */
 mongoose
-    .connect(process.env.MONGODB_URI, {
+    .connect('mongodb+srv://admin:admin@cluster0.uwfcu.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
     .then(() => console.log('Mongo db connected'))
 
-/** Passport middleware*/
-app.use(passport.initialize())
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// const uri = "mongodb+srv://admin:admin@cluster0.uwfcu.mongodb.net/ettibooking?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+// client.connect().then(() => console.log("MongoDB connected"))
 
 /** Passport config */
 require('./config/passport')(passport)
-
+app.use(passport.initialize())
 /** USE Routes */
 app.use('/api/users', users)
 app.use('/api/roles', roles)
@@ -45,3 +47,4 @@ app.get('/hello', (req, res) => res.send('Hello'))
 const port = process.env.PORT || 5000
 console.log('PORT', process.env.PORT)
 app.listen(port, () => console.log('Server running on port ' + port))
+

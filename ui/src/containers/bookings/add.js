@@ -41,7 +41,10 @@ export default function AddBooking({ refresh }) {
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
   const [selectedRoom, setSelectedRoom] = React.useState("");
   const [date, setDate] = React.useState(new Date(Date.now()));
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => {
+    console.log(state.auth)
+    return state.auth.user
+  });
   console.log(user);
   React.useEffect(() => {
     getBuildings();

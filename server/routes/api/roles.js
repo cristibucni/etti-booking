@@ -8,7 +8,7 @@ router.get(
     '/',
     // passport.authenticate("jwt", { session: false }),
     (req, res) => {
-        Role.find()
+        Role.find({"_id": {$ne: "63df6ca8dccac6afd01e8a44"}})
             .then((roles) => res.json(roles))
             .catch((err) =>
                 res.status(404).json({ noProjectFound: 'No roles found' })

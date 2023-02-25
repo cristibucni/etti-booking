@@ -11,6 +11,7 @@ const validateLoginInput = require('../../validation/login')
 
 /** Load User model */
 const User = require('../../models/User')
+const Role = require('../../models/Role')
 
 /** @route GET api/users/test
  *  @desc Tests users route
@@ -26,10 +27,12 @@ router.get(
     '/',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-        if (req.user.isAdmin) {
+        Role.findById(req.user.role).then(role => {
+            if (role.name === 'SUPERUSER') {
             User.find()
                 .select('-password')
                 .sort({ date: -1 })
+                .populate('role')
                 .then((users) => res.json(users))
                 .catch((err) =>
                     res.status(404).json({ noProjectFound: 'No users found' })
@@ -38,7 +41,8 @@ router.get(
             res.status(403).json({
                 forbidden: 'You have no access to this area.',
             })
-        }
+    }})
+       
     }
 )
 
@@ -63,6 +67,7 @@ router.post('/register', (req, res) => {
                 email: req.body.email,
                 password: req.body.password,
                 role: req.body.role,
+                isValidated: false,
             })
 
             bcrypt.genSalt(10, (err, salt) => {
@@ -128,6 +133,17 @@ router.post('/login', (req, res) => {
                     return res.status(400).json(errors)
                 }
             })
+        })
+})
+router.patch('/:id', (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
+
+    User.findOne({ _id: req.params.id })
+        .then((user) => {
+          
+            user.isValidated = true
+            user.save().then(newUser => res.json(newUser))
         })
 })
 

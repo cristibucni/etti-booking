@@ -3,11 +3,13 @@ import {
   MeetingRoom,
   Apartment,
   Dashboard as DashboardIcon,
+  Person,
 } from "@mui/icons-material";
 import { Bookings } from "../containers/bookings";
 import { Buildings } from "../containers/buildings";
 import { Dashboard } from "../containers/dashboard";
 import { Rooms } from "../containers/rooms";
+import { Users } from "../containers/users";
 
 const routes = [
   {
@@ -23,6 +25,12 @@ const routes = [
     component: Buildings,
     icon: Apartment,
     path: "/buildings",
+  },
+  {
+    name: "Users",
+    component: Users,
+    icon: Person,
+    path: "/users",
   },
 ];
 

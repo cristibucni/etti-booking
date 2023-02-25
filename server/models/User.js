@@ -24,6 +24,10 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'roles',
     },
+    isValidated: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = User = mongoose.model('users', UserSchema)
